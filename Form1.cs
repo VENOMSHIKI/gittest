@@ -7,9 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace WindowsFormsApp4
+namespace WindowsFormsApp3
 {
     public partial class Form1 : Form
     {
@@ -17,21 +16,47 @@ namespace WindowsFormsApp4
         {
             InitializeComponent();
         }
-        
-private void button1_Click(object sender, EventArgs e)
+
+        private void button1_Click(object sender, EventArgs e)
         {
-            long g = Convert.ToInt64(textBox1.Text);
-            long p = Convert.ToInt64(textBox2.Text);
-            long a = Convert.ToInt64(textBox3.Text);
-            long b = Convert.ToInt64(textBox4.Text);
-            double A = Math.Pow(g, a) % p;
-            double B = Math.Pow(g, b) % p;
-            textBox5.Text = A.ToString();
-            textBox6.Text = B.ToString();
-            double k = Math.Pow(B, a) % p;
-            double K = Math.Pow(A, b) % p;
-            textBox7.Text = k.ToString();
-            textBox8.Text = K.ToString();
+            int p = Convert.ToInt32(textBox1.Text); int q = Convert.ToInt32(textBox2.Text);
+            int n = 0;
+            int f = 0;
+            int E = 0;
+            int d = 0;
+            n = p * q;
+            f = (p - 1) * (q - 1);
+            //вычисление ключей
+            for (int i = 17; i <= f; i++)
+                if (IsSimple(i) && (f % i != 0))
+                {
+                    E = i;
+                }
+            textBox3.Text += E + "," + n.ToString();
+            for (int i = 17; i <= f; i++)
+            {
+                if (IsSimple(i) && (i * E % f == 1))
+                {
+                    d = i;
+                }
+            }
+            textBox4.Text += d + "," + n.ToString();
+            //шифрование
+            int P = Convert.ToInt32(textBox5.Text);
+            int r = (p ^ E) % n;
+            textBox6.Text += r.ToString();
+            //расшифровка
+            int v = (r ^ d) % n;
+            textBox7.Text += v.ToString();
+        }
+        public static bool IsSimple(int N)
+        {
+            for (int i = 16; i <= N / 16; i++)
+            {
+                if (N % 1 == 0)
+                    return false;
+            }
+            return true;
         }
 
     }
